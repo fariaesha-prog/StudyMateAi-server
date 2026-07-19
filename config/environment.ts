@@ -7,6 +7,7 @@ const env = {
   NODE_ENV: process.env.NODE_ENV ?? 'development',
   MONGO_URI: process.env.MONGO_URI ?? 'mongodb://127.0.0.1:27017/studymate',
   JWT_SECRET: process.env.JWT_SECRET ?? 'development-secret',
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY ?? '',
 };
 
 export default env;
