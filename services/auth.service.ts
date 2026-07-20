@@ -13,19 +13,18 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
  * Reused consistently across standard credentials login, registration, Google auth, and Demo access.
  */
 export const generateAndSendToken = (user: any, statusCode: number, res: Response) => {
-  const token = jwt.sign(
-    { id: user._id, email: user.email },
-    process.env.JWT_SECRET || 'fallback_secret',
-    { expiresIn: process.env.JWT_EXPIRES_IN || '1d' }
-  );
+ const token = jwt.sign(
+  { id: user._id, email: user.email },
+  process.env.JWT_SECRET || 'fallback_secret',
+  { expiresIn: process.env.JWT_EXPIRES_IN || '1d' } as jwt.SignOptions
+);
 
-  const cookieOptions = {
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 Day
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict' as const,
-  };
-
+const cookieOptions = {
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  httpOnly: true,
+  secure: process.env.NODE_ENV === 'production',
+  sameSite: process.env.NODE_ENV === 'production' ? ('none' as const) : ('lax' as const),
+};
   res.cookie('token', token, cookieOptions);
 
   res.status(statusCode).json({

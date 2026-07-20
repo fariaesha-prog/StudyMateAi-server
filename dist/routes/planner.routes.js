@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const planner_controller_1 = require("../controllers/planner.controller");
+const auth_middleware_1 = require("../middleware/auth.middleware");
+const router = (0, express_1.Router)();
+router.get('/', auth_middleware_1.protect, planner_controller_1.PlannerController.list);
+router.post('/', auth_middleware_1.protect, planner_controller_1.PlannerController.create);
+router.get('/:id', auth_middleware_1.protect, planner_controller_1.PlannerController.getById);
+router.patch('/:id/days/:dayOffset', auth_middleware_1.protect, planner_controller_1.PlannerController.toggleDay);
+router.delete('/:id', auth_middleware_1.protect, planner_controller_1.PlannerController.remove);
+exports.default = router;

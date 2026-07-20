@@ -22,7 +22,7 @@ export class ChatController {
 
   public static async getMessages(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const result = await ChatSessionService.getMessages(req.params.sessionId, req.user!.id);
+      const result = await ChatSessionService.getMessages(req.params.sessionId as string, req.user!.id);
       res.status(200).json({ status: 'success', data: result });
     } catch (error) {
       next(error);
@@ -32,7 +32,7 @@ export class ChatController {
   public static async sendMessage(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const assistantMessage = await ChatSessionService.sendMessage(
-        req.params.sessionId,
+        req.params.sessionId as string,
         req.user!.id,
         req.body.message
       );
@@ -44,7 +44,7 @@ export class ChatController {
 
   public static async attachDocument(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const session = await ChatSessionService.attachDocument(req.params.sessionId, req.user!.id, req.body.documentId);
+      const session = await ChatSessionService.attachDocument(req.params.sessionId as string, req.user!.id, req.body.documentId);
       res.status(200).json({ status: 'success', data: { session } });
     } catch (error) {
       next(error);

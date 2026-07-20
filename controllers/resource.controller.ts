@@ -37,7 +37,7 @@ export class ResourceController {
 
   public static async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const resource = await ResourceService.getById(req.params.id);
+      const resource = await ResourceService.getById(req.params.id as string);
       res.status(200).json({ status: 'success', data: { resource } });
     } catch (error) {
       next(error);
@@ -46,7 +46,7 @@ export class ResourceController {
 
   public static async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      await ResourceService.delete(req.params.id, req.user!.id);
+      await ResourceService.delete(req.params.id as string, req.user!.id);
       res.status(200).json({ status: 'success', message: 'Resource deleted' });
     } catch (error) {
       next(error);

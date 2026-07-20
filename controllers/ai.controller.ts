@@ -32,7 +32,7 @@ export class AiController {
 
   public static async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const doc = await StudyDocumentService.getById(req.params.id, req.user!.id);
+      const doc = await StudyDocumentService.getById(req.params.id as string, req.user!.id);
       res.status(200).json({ status: 'success', data: { document: doc } });
     } catch (error) {
       next(error);

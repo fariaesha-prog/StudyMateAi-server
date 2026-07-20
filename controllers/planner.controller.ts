@@ -27,7 +27,7 @@ export class PlannerController {
 
   public static async getById(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const plan = await StudyPlanService.getById(req.params.id, req.user!.id);
+      const plan = await StudyPlanService.getById(req.params.id as string, req.user!.id);
       res.status(200).json({ status: 'success', data: { plan } });
     } catch (error) {
       next(error);
@@ -37,7 +37,7 @@ export class PlannerController {
   public static async toggleDay(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const plan = await StudyPlanService.toggleDay(
-        req.params.id,
+        req.params.id as string,
         req.user!.id,
         Number(req.params.dayOffset),
         req.body.completed
@@ -50,7 +50,7 @@ export class PlannerController {
 
   public static async remove(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      await StudyPlanService.remove(req.params.id, req.user!.id);
+      await StudyPlanService.remove(req.params.id as string, req.user!.id);
       res.status(200).json({ status: 'success', message: 'Study plan deleted' });
     } catch (error) {
       next(error);
